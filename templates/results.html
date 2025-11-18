@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoGenius - Simulation Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f7f6; }
+
+        .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        h1 { color: #1a73e8; border-bottom: 2px solid #ccc; padding-bottom: 10px; }
+
+        
+
+        /* Debate Box Styling */
+
+        .debate-box { border: 1px solid #ddd; padding: 15px; height: 350px; overflow-y: scroll; margin-bottom: 30px; background-color: #fff; border-radius: 8px; }
+
+        .message { margin-bottom: 15px; padding: 10px; border-radius: 8px; font-size: 0.95em; }
+
+        
+
+        /* Agent Coloring (Professional Look) */
+
+        .green { background-color: #e6ffe6; border-left: 5px solid #00c853; } /* Carbon Agent */
+
+        .red { background-color: #ffe6e6; border-left: 5px solid #ff4444; } /* Cost Agent */
+
+        .default { background-color: #f0f0f0; border-left: 5px solid #aaa; } /* Logistics Agent */
+
+        .blue { background-color: #e6f7ff; border-left: 5px solid #2979ff; font-weight: bold; } /* Orchestrator */
+
+        
+
+        .big-number { font-size: 4em; font-weight: bold; color: #00c853; text-align: center; margin: 20px 0; }
+
+        .chart-section { display: flex; justify-content: space-around; margin-top: 40px; }
+
+        .chart-box { width: 45%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Simulation Complete!</h1>
+        
+        <h2>🤖 Multi-Agent Debate Log</h2>
+        <div class="debate-box">
+            {% for message in debate_log %}
+                <div class="message {{ message.color }}">
+                    <strong>{{ message.agent }}:</strong> {{ message.text }}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <h2 style="text-align: center;">📈 EcoGenius Optimal Solution</h2>
+        <div class="big-number">{{ final_data.reduction_percent }}%</div>
+        <p style="text-align: center; font-size: 1.2em; color: #555;">Reduction in Carbon Footprint</p>
+
+        <div class="chart-section">
+            <div class="chart-box">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="costChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Use Flask/Jinja2 data to generate Chart.js graphs
+
+        // Carbon Comparison Chart
+        const ctx_carbon = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(ctx_carbon, {
+            type: 'bar',
+            data: {
+                labels: ['Old Policy', 'EcoGenius Policy'],
+                datasets: [{
+                    label: 'Carbon Emissions (kg CO2e)',
+                    data: [{{ final_data.old_carbon }}, {{ final_data.new_carbon }}],
+                    backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(0, 200, 83, 0.7)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: { display: true, text: 'Carbon Footprint Comparison' }
+                },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Cost Comparison Chart
+        const ctx_cost = document.getElementById('costChart').getContext('2d');
+        new Chart(ctx_cost, {
+            type: 'bar',
+            data: {
+                labels: ['Old Policy', 'EcoGenius Policy'],
+                datasets: [{
+                    label: 'Total Cost ($)',
+                    data: [{{ final_data.old_cost }}, {{ final_data.new_cost }}],
+                    backgroundColor: ['rgba(54, 162, 235, 0.7)', 'rgba(255, 159, 64, 0.7)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: { display: true, text: 'Cost Comparison' }
+                },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoGenius - AI Simulator</title>
+    <style>
+      <style>
+    /* 1. Body and Background (Modern Feel) */
+    body { 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean, modern font */
+        padding: 0; margin: 0;
+        background-color: #f0f4f8; /* Very light, soft blue background */
+        color: #333;
+    }
+    
+    /* 2. Container (App Card Look) */
+    .container { 
+        max-width: 650px; 
+        margin: 80px auto; /* More margin from top for central placement */
+        background: #ffffff; /* Pure white card */
+        padding: 40px; 
+        border-radius: 18px; /* Smoothly rounded corners */
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* Deeper, more noticeable shadow */
+    }
+    
+    /* 3. Headings */
+    h1 { 
+        text-align: center; 
+        color: #007bff; /* Deep blue for primary action/title */
+        margin-bottom: 5px;
+    }
+    p {
+        text-align: center; 
+        color: #6c757d;
+        margin-bottom: 30px;
+    }
+
+    /* 4. Input Fields */
+    label { 
+        display: block; 
+        margin-top: 20px; 
+        font-weight: 600; /* Bolder label text */
+        color: #495057;
+    }
+    input[type="text"], input[type="number"] { 
+        width: 100%; /* Full width of container padding */
+        padding: 12px; 
+        margin-top: 8px; 
+        border: 1px solid #ced4da; /* Light border */
+        border-radius: 8px; 
+        box-sizing: border-box; /* Ensures padding is inside the width */
+        transition: border-color 0.3s;
+    }
+    input[type="text"]:focus, input[type="number"]:focus {
+        border-color: #007bff; /* Highlight focus */
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    /* 5. Button (Interactive Effect) */
+    button { 
+        background-color: #007bff; /* Primary action color */
+        color: white; 
+        padding: 15px 25px; 
+        border: none; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        margin-top: 30px; 
+        width: 100%; 
+        font-size: 1.15em; 
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.1s; /* Smooth transitions */
+    }
+    button:hover { 
+        background-color: #0056b3; /* Darker on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+</style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 EcoGenius: Decarbonization Simulator</h1>
+        <p style="text-align: center; color: #555;">Enter your supply chain parameters and let the AI-Agents find the optimal low-carbon solution.</p>
+        
+        <form method="POST" action="/simulate">
+            <label for="product">Product Name (e.g., Cotton T-Shirt):</label>
+            <input type="text" id="product" name="product" required><br>
+
+            <label for="current_shipping">Current Shipping Method:</label>
+            <input type="text" id="current_shipping" name="current_shipping" value="China to Europe via Air Freight" required><br>
+
+            <label for="carbon_target">Desired Carbon Reduction Target (%):</label>
+            <input type="number" id="carbon_target" name="carbon_target" value="30" required><br>
+
+            <button type="submit">🚀 Start Simulation</button>
+        </form>
+    </div>
+</body>
+</html>
